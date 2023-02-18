@@ -1,0 +1,51 @@
+spring:
+  #  application:
+  #    name: dubbo-consumer
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dubbo?serverTimezone=Asia/Shanghai
+    username: root
+    password: aaaa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+
+
+server:
+  port: 8882
+
+dubbo:
+  application:
+    name: dubbo-provider
+  registry:
+    #    address: zookeeper://192.168.1.30:2181
+    address: nacos://192.168.31.30:8848
+
+  scan:
+    base-packages: dlc.service
+
+  protocol:
+    name: dubbo
+    port: 20885
+
+seata:
+  application-id: dubbo-provider
+  tx-service-group: default_tx_group # 事务分组，与seata-server配置保持一致
+  service:
+    vgroup-vgroupMapping.default_tx_group: SEATA_GROUP
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 192.168.31.30:8848
+      cluster: default
+      namespace: 87d70d2c-1029-4ebb-909e-91015e5e78bc
+  config:
+    type: nacos
+    nacos:
+      server-addr: 192.168.31.30:8848
+      namespace: 87d70d2c-1029-4ebb-909e-91015e5e78bc
+#    timeout: 250000
+#    parameters:
+#      blockUntilConnectedWait: 250
+
